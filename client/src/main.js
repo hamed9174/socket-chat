@@ -13,7 +13,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 //use
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'http://localhost:3000/'
+  connection: 'ws://localhost:3000'
 }))
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
