@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>socket chat</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <form @submit.prevent="sendMessage">
+            <input v-model="message" type="text" />
+        </form>
+        <ul>
+            <li v-for="message in messages">
+                {{message}}
+            </li>
+        </ul>
+    </div>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+
+    <script>
+        var socket = io();
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                title: 'Cath...',
+                message: '',
+                messages: []
+            },
+            created() {
+                socket.emit('create', 'hamed');
+                socket.on('create', (data) => {
+                    console.log(data)
+                })
+                socket.on('message', (data) => {
+                    this.messages.push(data)
+                })
+            },
+            methods: {
+                sendMessage() {
+                    socket.emit('message', this.message);
+                    this.message = '';
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
